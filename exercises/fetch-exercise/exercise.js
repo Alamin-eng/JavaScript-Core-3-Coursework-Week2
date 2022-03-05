@@ -16,11 +16,24 @@ Expected result
 Open index.html in your browser. Every time you refresh the page,
 a different greeting should be displayed in the box.
 */
-let getParagraph = document.getElementById('greeting-text')
-fetch("https://codeyourfuture.herokuapp.com/api/greetings")
+function whatever(){
+  let getParagraph = document.getElementById('greeting-text')
+
+fetch("https://codeyourfuture.herokuapp.com/api/greeting")
   .then(function (response) {
-    return response.text();
+    if(response.ok){
+      return response.text()
+    } else {
+      throw new Error (response.status)
+    }
   })
   .then(function (greeting) {
     getParagraph.innerText = greeting
-  });
+  })
+  .catch((e) => {
+    getParagraph.innerText = `There is an error`
+    console.log(e)
+  })
+}
+
+whatever()
